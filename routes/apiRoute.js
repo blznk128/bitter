@@ -48,7 +48,7 @@ module.exports = (app) => {
 
     //get all bits
     app.get("/api/getAllBits", (req, res) => {
-        db.Bit.findAll({
+        db.Bit.findAll({ order: [['createdAt', 'ASC']],
             include: [db.User]
         }).then((dbBit) => {
             res.json(dbBit)
