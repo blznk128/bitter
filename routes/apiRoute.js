@@ -45,4 +45,13 @@ module.exports = (app) => {
             res.json(dbBit)
         })
     });  
+
+    //get all bits
+    app.get("/api/getAllBits", (req, res) => {
+        db.Bit.findAll({
+            include: [db.User]
+        }).then((dbBit) => {
+            res.json(dbBit)
+        })
+    })
 }

@@ -21,5 +21,9 @@ function submitBit() {
     }
     addBit(newBit)
   });
-  
-}
+};
+
+$.get("/api/getAllBits").then(function(allBits) {
+  console.log(allBits)
+  console.log(allBits[0].bit)
+})
