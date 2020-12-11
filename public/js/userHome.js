@@ -26,8 +26,10 @@ function submitBit() {
 
 $.get("/api/getAllBits").then(function(allBits) {
   console.log(allBits)
-  console.log(allBits[0].bit)
+  console.log(allBits[0].User.email)
   for (let i = 0; i < allBits.length;i++) {
-    allBitsDisplay.append("<p>" + allBits[i].bit)
+    // allBitsDisplay.append("<p>" + allBits[i].bit)
+    allBitsDisplay.append("<div class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
+    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p>" + allBits[i].bit + "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
   }
 })
