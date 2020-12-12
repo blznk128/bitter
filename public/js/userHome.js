@@ -21,9 +21,13 @@ function submitBit() {
       UserId: data.id
     }
     addBit(newBit)
+    location.reload().then(getThemBits())
+    // location.href = "/members";
+    
   });
 };
 
+function getThemBits() {
 $.get("/api/getAllBits").then(function(allBits) {
   console.log(allBits)
   console.log(allBits[0].User.email)
@@ -33,3 +37,6 @@ $.get("/api/getAllBits").then(function(allBits) {
     "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p>" + allBits[i].bit + "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
   }
 })
+}
+
+getThemBits()
