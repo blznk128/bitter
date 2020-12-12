@@ -9,7 +9,7 @@ const allBitsDisplay = $("#allBits")
 function addBit(currentBit) {
   $.post("/api/saveBit", currentBit, () => {
 
-  })
+  }).then(getThemBits()).then(setTimeout(function(){ location.reload() }, 1000))
 }
 
 function submitBit() {
@@ -21,7 +21,7 @@ function submitBit() {
       UserId: data.id
     }
     addBit(newBit)
-    location.reload().then(getThemBits())
+    // location.reload()
     // location.href = "/members";
     
   });
