@@ -53,5 +53,16 @@ module.exports = (app) => {
         }).then((dbBit) => {
             res.json(dbBit)
         })
+    });
+
+    //delete a bit
+    app.delete("/api/deleteBit/:id", (req, res) => {
+        db.Bit.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(function(dbBit) {
+            res.json(dbBit)
+        })
     })
 }
