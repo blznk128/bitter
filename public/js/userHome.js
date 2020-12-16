@@ -7,6 +7,7 @@ const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
 
 $(document).on("click", "button.delete", deleteBit);
+$(document).on("click", "button.edit", editBit)
 
 function addBit(currentBit) {
   $.post("/api/saveBit", currentBit, () => {
@@ -36,7 +37,8 @@ $.get("/api/getAllBits").then(function(allBits) {
   for (let i = 0; i < allBits.length;i++) {
     // allBitsDisplay.append("<p>" + allBits[i].bit)
     allBitsDisplay.append("<div id=" + allBits[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
-    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p>" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
+    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p>" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + allBits[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
+    "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
   }
 })
 }
@@ -47,7 +49,12 @@ function deleteBit() {
   $.ajax({
     method: "DELETE",
     url: "/api/deleteBit/" + bitId
-  })
+  }).then(setTimeout(function(){ location.reload() }, 2000))
+}
+
+function editBit() {
+  let editBitId = $(this).attr("id")
+  console.log(editBitId)
 }
 
 getThemBits()
