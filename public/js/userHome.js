@@ -5,6 +5,7 @@ $.get("/api/user_data").then(function(data) {
 
 const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
+let editingBit = false;
 
 $(document).on("click", "button.delete", deleteBit);
 $(document).on("click", "button.edit", editBit)
@@ -54,7 +55,18 @@ function deleteBit() {
 
 function editBit() {
   let editBitId = $(this).attr("id")
-  console.log(editBitId)
+  getSelectedBit(editBitId)
+}
+
+function getSelectedBit(id) {
+  $.get("/api/bits/" + id, function(data) {
+    console.log(data.bit)
+    // userBit.text(data.bit)
+    if(data) {
+      userBit.val(data.bit);
+      editingBit = true
+    }
+  })
 }
 
 getThemBits()

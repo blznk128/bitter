@@ -64,5 +64,17 @@ module.exports = (app) => {
         }).then(function(dbBit) {
             res.json(dbBit)
         })
-    })
+    });
+
+    //edit a bit
+    app.get("/api/bits/:id", function(req, res) {
+        db.Bit.findOne({
+          where: {
+            id: req.params.id
+          }
+        })
+          .then(function(dbBit) {
+            res.json(dbBit);
+          });
+      });
 }
