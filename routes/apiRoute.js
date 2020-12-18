@@ -77,4 +77,16 @@ module.exports = (app) => {
             res.json(dbBit);
           });
       });
+
+      app.put("/api/getAllBits", function(req, res) {
+        db.Bit.update(req.body,
+          {
+             where: {
+                id: req.body.id
+              }
+            })
+            .then(function(dbBit) {
+              res.json(dbBit);
+            });
+        });  
 }

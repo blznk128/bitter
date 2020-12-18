@@ -6,6 +6,7 @@ $.get("/api/user_data").then(function(data) {
 const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
 let editingBit = false;
+let selectedBitId;
 
 $(document).on("click", "button.delete", deleteBit);
 $(document).on("click", "button.edit", editBit)
@@ -24,7 +25,17 @@ function submitBit() {
       bit: userBit.val(),
       UserId: data.id
     }
-    addBit(newBit)
+    if(editingBit){
+      newBit.id = selectedBitId
+      updateBit(newBit)
+      console.log("this is bit",newBit)
+      console.log("this is bit 2",selectedBitId)
+    } else  {
+      addBit(newBit)
+    }
+    
+
+
     // location.reload()
     // location.href = "/members";
     
@@ -60,12 +71,22 @@ function editBit() {
 
 function getSelectedBit(id) {
   $.get("/api/bits/" + id, function(data) {
-    console.log(data.bit)
+    console.log(data.id)
     // userBit.text(data.bit)
     if(data) {
+      selectedBitId = data.id
       userBit.val(data.bit);
       editingBit = true
     }
+  })
+}
+
+//sending the new update
+function updateBit(updatingBit){
+  $.ajax({
+    method: "PUT",
+    url: "/api/getAllBits",
+    data: updatingBit
   })
 }
 
