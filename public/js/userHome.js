@@ -1,12 +1,14 @@
-$.get("/api/user_data").then(function(data) {
-    $("#user").text(" " + data.id);
-    
-  });
-
 const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
 let editingBit = false;
 let selectedBitId;
+let loggedInUser;
+
+$.get("/api/user_data").then(function(data) {
+  loggedInUser = data.id
+  console.log("hey, over here",loggedInUser)
+  $("#user").text(" " + data.email);
+});
 
 $(document).on("click", "button.delete", deleteBit);
 $(document).on("click", "button.edit", editBit)
@@ -28,17 +30,10 @@ function submitBit() {
     if(editingBit){
       newBit.id = selectedBitId
       updateBit(newBit)
-      console.log("this is bit",newBit)
-      console.log("this is bit 2",selectedBitId)
+      setTimeout(function(){ location.reload() }, 2000)
     } else  {
       addBit(newBit)
     }
-    
-
-
-    // location.reload()
-    // location.href = "/members";
-    
   });
 };
 
@@ -70,12 +65,13 @@ function editBit() {
 }
 
 function getSelectedBit(id) {
-  $.get("/api/bits/" + id, function(data) {
-    console.log(data.id)
-    // userBit.text(data.bit)
-    if(data) {
-      selectedBitId = data.id
-      userBit.val(data.bit);
+  $.get("/api/bits/" + id, function(selectedBit) {
+    console.log("this is selected bits", loggedInUser)
+    selectedBitId = selectedBit.id
+    if(loggedInUser === selectedBit.UserId) {
+      console.log("selectedbit id", selectedBit.UserId)
+      
+      userBit.val(selectedBit.bit);
       editingBit = true
     }
   })
