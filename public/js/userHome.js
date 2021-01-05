@@ -39,24 +39,27 @@ function submitBit() {
 
 function getThemBits() {
 $.get("/api/getAllBits").then(function(allBits) {
-  console.log(allBits)
-  console.log(allBits[0].User.email)
   for (let i = 0; i < allBits.length;i++) {
-    // allBitsDisplay.append("<p>" + allBits[i].bit)
+    console.log(allBits[i].UserId)
     allBitsDisplay.append("<div id=" + allBits[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
-    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p>" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + allBits[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
+    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p id=" + allBits[i].UserId + ">" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + allBits[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
     "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
   }
 })
 }
 
 function deleteBit() {
+  let bitUserId = $(this).parent().attr("id")
   let bitId = $(this).parent().parent().parent().parent().attr("id")
-  console.log(bitId)
+  
+  console.log("this is bituserid", bitUserId)
+  console.log("this is delete loggedinUser", loggedInUser)
+  if(loggedInUser == bitUserId){
   $.ajax({
     method: "DELETE",
     url: "/api/deleteBit/" + bitId
   }).then(setTimeout(function(){ location.reload() }, 2000))
+}
 }
 
 function editBit() {
@@ -66,11 +69,8 @@ function editBit() {
 
 function getSelectedBit(id) {
   $.get("/api/bits/" + id, function(selectedBit) {
-    console.log("this is selected bits", loggedInUser)
     selectedBitId = selectedBit.id
     if(loggedInUser === selectedBit.UserId) {
-      console.log("selectedbit id", selectedBit.UserId)
-      
       userBit.val(selectedBit.bit);
       editingBit = true
     }
