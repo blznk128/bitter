@@ -6,7 +6,6 @@ let loggedInUser;
 
 $.get("/api/user_data").then(function(data) {
   loggedInUser = data.id
-  console.log("hey, over here",loggedInUser)
   $("#user").text(" " + data.email);
 });
 
@@ -41,9 +40,16 @@ function getThemBits() {
 $.get("/api/getAllBits").then(function(allBits) {
   for (let i = 0; i < allBits.length;i++) {
     console.log(allBits[i].UserId)
+    //make if/else statement*
+    if(loggedInUser == allBits[i].UserId){
     allBitsDisplay.append("<div id=" + allBits[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
     "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p id=" + allBits[i].UserId + ">" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + allBits[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
     "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
+    } else  {
+      allBitsDisplay.append("<div id=" + allBits[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
+    "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p id=" + allBits[i].UserId + ">" + allBits[i].bit +  
+    "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
+    }
   }
 })
 }
@@ -51,9 +57,6 @@ $.get("/api/getAllBits").then(function(allBits) {
 function deleteBit() {
   let bitUserId = $(this).parent().attr("id")
   let bitId = $(this).parent().parent().parent().parent().attr("id")
-  
-  console.log("this is bituserid", bitUserId)
-  console.log("this is delete loggedinUser", loggedInUser)
   if(loggedInUser == bitUserId){
   $.ajax({
     method: "DELETE",
