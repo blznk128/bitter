@@ -89,4 +89,12 @@ function updateBit(updatingBit){
   })
 }
 
-getThemBits()
+function getAllUsers() {
+  $.get("/api/getAllUsers").then(function(allUsers) {
+    for( let i = 0; i < allUsers.length; i++) {
+      console.log(allUsers[i].email)
+    }
+  })
+}
+getAllUsers()
+// getThemBits()

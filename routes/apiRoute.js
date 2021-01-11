@@ -78,7 +78,8 @@ module.exports = (app) => {
           });
       });
 
-      app.put("/api/getAllBits", function(req, res) {
+    //update bit
+    app.put("/api/getAllBits", function(req, res) {
         db.Bit.update(req.body,
           {
              where: {
@@ -89,4 +90,12 @@ module.exports = (app) => {
               res.json(dbBit);
             });
         });  
+
+    app.get("/api/getAllUsers", function(req, res) {
+        db.User.findAll({
+            include: [db.Bit]
+        }).then(function(dbUser) {
+            res.json(dbUser)
+        })
+    })
 }

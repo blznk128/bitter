@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: true
+        },
+        favoriteUser: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     })
     User.prototype.validPassword = function(password) {
