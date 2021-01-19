@@ -1,5 +1,6 @@
 const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
+const usersHolder = $("#allUsers")
 let editingBit = false;
 let selectedBitId;
 let loggedInUser;
@@ -11,6 +12,7 @@ $.get("/api/user_data").then(function(data) {
 
 $(document).on("click", "button.delete", deleteBit);
 $(document).on("click", "button.edit", editBit)
+$(document).on("click", "a.testOne", saveUser);
 
 function addBit(currentBit) {
   $.post("/api/saveBit", currentBit, () => {
@@ -89,12 +91,20 @@ function updateBit(updatingBit){
   })
 }
 
+//get all users in database
 function getAllUsers() {
   $.get("/api/getAllUsers").then(function(allUsers) {
     for( let i = 0; i < allUsers.length; i++) {
-      console.log(allUsers[i].email)
+      usersHolder.append("<a id =" + allUsers[i].id + " href='#'" + " class='testOne'"+">" + allUsers[i].email + "</a>" + " ")
     }
   })
 }
+
+//save user to account
+function saveUser(){
+  const userClickedId = $(this).attr("id")
+  console.log(userClickedId)
+}
+
 getAllUsers()
 // getThemBits()
