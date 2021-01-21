@@ -103,7 +103,11 @@ function getAllUsers() {
 //save user to account
 function saveUser(){
   const userClickedId = $(this).attr("id")
-  console.log(userClickedId)
+  $.get("/api/getSingleUser/" + userClickedId, function(singleUser) {
+  
+  console.log(singleUser)
+})
+  
 }
 
 getAllUsers()

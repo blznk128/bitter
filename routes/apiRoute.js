@@ -78,6 +78,18 @@ module.exports = (app) => {
           });
       });
 
+    //get user by id
+    app.get("/api/getSingleUser/:id", function(req, res) {
+        db.User.findOne({
+          where: {
+              id: req.params.id
+          }
+        }).then(function(dbUser) {
+            res.json(dbUser)
+        })
+
+    })
+
     //update bit
     app.put("/api/getAllBits", function(req, res) {
         db.Bit.update(req.body,
