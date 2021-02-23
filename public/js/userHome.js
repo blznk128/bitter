@@ -114,11 +114,12 @@ function addUsertoUser(saveTheUser) {
 //save user to account
 function saveUser(currentBit) {
   const userClickedId = $(this).attr("id")
-  console.log(loggedInUser)
+  currentUserId = loggedInUser
   let userToBeSaved = {
     favoriteUser: userClickedId,
-    UserId: loggedInUser
+    UserId: currentUserId
   }
+  console.log(currentUserId)
   addUsertoUser(userToBeSaved)
   
 }

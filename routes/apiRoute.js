@@ -111,7 +111,7 @@ module.exports = (app) => {
             {
              where: {
                  //maybe .then cause req.body.id isnt pulling up
-                id: 1
+                id: req.user.id
                 }
             })
             .then(function(dbBit) {
