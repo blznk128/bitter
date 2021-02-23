@@ -103,6 +103,23 @@ module.exports = (app) => {
             });
         });  
 
+    //save a user to logged in user
+    app.put("/api/saveUsertoUser", function(req, res) {
+        db.User.update({
+            favoriteUser: req.body.favoriteUser
+        },
+            {
+             where: {
+                 //maybe .then cause req.body.id isnt pulling up
+                id: 1
+                }
+            })
+            .then(function(dbBit) {
+                res.json(dbBit)
+                console.log("hi")
+            });
+        });  
+
     app.get("/api/getAllUsers", function(req, res) {
         db.User.findAll({
             include: [db.Bit]

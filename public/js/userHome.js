@@ -100,15 +100,36 @@ function getAllUsers() {
   })
 }
 
+//user to be added to user favorite
+function addUsertoUser(saveTheUser) {
+  $.ajax({
+    method: "PUT",
+    url: "/api/saveUsertoUser",
+    data: saveTheUser
+  }).then(console.log("is this todo: ",saveTheUser))
+};
+
+
+
 //save user to account
-function saveUser(){
+function saveUser(currentBit) {
   const userClickedId = $(this).attr("id")
-  $.get("/api/getSingleUser/" + userClickedId, function(singleUser) {
-  
-  console.log(singleUser)
-})
+  console.log(loggedInUser)
+  let userToBeSaved = {
+    favoriteUser: userClickedId,
+    UserId: loggedInUser
+  }
+  addUsertoUser(userToBeSaved)
   
 }
+// function saveUser(){
+//   const userClickedId = $(this).attr("id")
+//   $.get("/api/getSingleUser/" + userClickedId, function(singleUser) {
+//   console.log(singleUser)
+// })
+// }
+
+
 
 getAllUsers()
 // getThemBits()
