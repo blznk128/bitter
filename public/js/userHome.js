@@ -1,6 +1,7 @@
 const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
 const usersHolder = $("#allUsers")
+const followerBits = $("#followerBits")
 let editingBit = false;
 let selectedBitId;
 let loggedInUser;
@@ -56,6 +57,13 @@ $.get("/api/getAllBits").then(function(allBits) {
 })
 }
 
+function getFollowerBits() {
+  $.get("/api/user_data").then(function(data) {
+    loggedInUser = data
+    console.log(data)
+  });
+}
+
 function deleteBit() {
   let bitUserId = $(this).parent().attr("id")
   let bitId = $(this).parent().parent().parent().parent().attr("id")
@@ -81,6 +89,12 @@ function getSelectedBit(id) {
     }
   })
 }
+
+//getting user with theirs and saved users bits
+function getUserAndSavedUsers(id){
+$.get("/api/getSingleUser")
+}
+
 
 //sending the new update
 function updateBit(updatingBit){
@@ -123,6 +137,8 @@ function saveUser(currentBit) {
   addUsertoUser(userToBeSaved)
   
 }
+
+
 // function saveUser(){
 //   const userClickedId = $(this).attr("id")
 //   $.get("/api/getSingleUser/" + userClickedId, function(singleUser) {
@@ -133,4 +149,5 @@ function saveUser(currentBit) {
 
 
 getAllUsers()
+getFollowerBits()
 // getThemBits()
