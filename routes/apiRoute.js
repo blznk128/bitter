@@ -25,6 +25,7 @@ module.exports = (app) => {
         } else {
             res.json({
             email: req.user.email,
+            // favoriteUser: req.user.favoriteUser,
             id: req.user.id
             });
         }

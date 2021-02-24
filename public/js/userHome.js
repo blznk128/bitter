@@ -9,6 +9,7 @@ let loggedInUser;
 $.get("/api/user_data").then(function(data) {
   loggedInUser = data.id
   $("#user").text(" " + data.email);
+  getFollowerBits()
 });
 
 $(document).on("click", "button.delete", deleteBit);
@@ -58,10 +59,10 @@ $.get("/api/getAllBits").then(function(allBits) {
 }
 
 function getFollowerBits() {
-  $.get("/api/user_data").then(function(data) {
-    loggedInUser = data
-    console.log(data)
-  });
+  console.log(loggedInUser)
+  $.get("/api/getSingleUser/" + loggedInUser, function(userWithFavoriteUsers) {
+    console.log(userWithFavoriteUsers)
+  })
 }
 
 function deleteBit() {
@@ -92,7 +93,10 @@ function getSelectedBit(id) {
 
 //getting user with theirs and saved users bits
 function getUserAndSavedUsers(id){
-$.get("/api/getSingleUser")
+$.get("/api/user_data").then(function(data) {
+    loggedInUser = data
+    console.log(loggedInUser)
+  });
 }
 
 
@@ -149,5 +153,5 @@ function saveUser(currentBit) {
 
 
 getAllUsers()
-getFollowerBits()
+getUserAndSavedUsers()
 // getThemBits()
