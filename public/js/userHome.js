@@ -58,10 +58,24 @@ $.get("/api/getAllBits").then(function(allBits) {
 })
 }
 
+// function getFollowerBits() {
+//   console.log(loggedInUser)
+//   $.get("/api/getSingleUser/" + loggedInUser, function(userWithFavoriteUsers) {
+//     console.log(userWithFavoriteUsers)
+
+//   })
+// }
+
 function getFollowerBits() {
-  console.log(loggedInUser)
-  $.get("/api/getSingleUser/" + loggedInUser, function(userWithFavoriteUsers) {
-    console.log(userWithFavoriteUsers)
+  // console.log(loggedInUser)
+  $.get("/api/getAllBits").then( function(userWithFavoriteUsers) {
+    console.log("this is new:", userWithFavoriteUsers)
+    for(let i = 0; i < userWithFavoriteUsers.length; i++) {
+      console.log(userWithFavoriteUsers[i].User.favoriteUser)
+      if(loggedInUser.id == userWithFavoriteUsers[i].UserId){
+        followerBits.append(userWithFavoriteUsers[i].bit + " ")
+      }
+    }
   })
 }
 
