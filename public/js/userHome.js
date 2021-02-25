@@ -71,9 +71,13 @@ function getFollowerBits() {
   $.get("/api/getAllBits").then( function(userWithFavoriteUsers) {
     console.log("this is new:", userWithFavoriteUsers)
     for(let i = 0; i < userWithFavoriteUsers.length; i++) {
-      console.log(userWithFavoriteUsers[i].User.favoriteUser)
-      if(loggedInUser.id == userWithFavoriteUsers[i].UserId){
-        followerBits.append(userWithFavoriteUsers[i].bit + " ")
+      // console.log(userWithFavoriteUsers[i].User.favoriteUser)
+      let favoriteUserId = userWithFavoriteUsers[i].User.favoriteUser
+      // console.log("new one",favoriteUserId)
+      if(loggedInUser.favoriteUser == userWithFavoriteUsers[i].UserId){
+        console.log("oy" + userWithFavoriteUsers[i].bit + " ")
+      } else {
+        console.log(userWithFavoriteUsers[i].bit)
       }
     }
   })
