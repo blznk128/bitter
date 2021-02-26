@@ -58,12 +58,21 @@ $.get("/api/getAllBits").then(function(allBits) {
 })
 }
 
-// function getFollowerBits() {
-//   console.log(loggedInUser)
-//   $.get("/api/getSingleUser/" + loggedInUser, function(userWithFavoriteUsers) {
-//     console.log(userWithFavoriteUsers)
+// $.get("/api/getAllBits", function(data) {
+//   setTimeout(function(){getFollowerBits(data)},5000)
+// })
 
-//   })
+
+
+// function getFollowerBits(userWithFavoriteUsers) {
+//     for(let i = 0; i < userWithFavoriteUsers.length; i++) {
+//       let favoriteUserId = userWithFavoriteUsers[i].User.favoriteUser
+//       if(userWithFavoriteUsers[0].User.favoriteUser == userWithFavoriteUsers[i].UserId){
+//         console.log("oy" + userWithFavoriteUsers[i].bit + " ")
+//       } else {
+//         console.log(favoriteUserId)
+//       }
+//     }
 // }
 
 function getFollowerBits() {
@@ -76,9 +85,11 @@ function getFollowerBits() {
       // console.log("new one",favoriteUserId)
       if(loggedInUser.favoriteUser == userWithFavoriteUsers[i].UserId){
         console.log("oy" + userWithFavoriteUsers[i].bit + " ")
-      } else {
+      } else if(loggedInUser.id == userWithFavoriteUsers[i].UserId) {
         console.log(userWithFavoriteUsers[i].bit)
       }
+        
+      
     }
   })
 }
