@@ -6,11 +6,15 @@ let editingBit = false;
 let selectedBitId;
 let loggedInUser;
 
+function getLoggedInUser(){
 $.get("/api/user_data").then(function(data) {
   loggedInUser = data.id
   $("#user").text(" " + data.email);
   getFollowerBits()
 });
+}
+
+getLoggedInUser()
 
 $(document).on("click", "button.delete", deleteBit);
 $(document).on("click", "button.edit", editBit)
@@ -76,17 +80,15 @@ $.get("/api/getAllBits").then(function(allBits) {
 // }
 
 function getFollowerBits() {
-  // console.log(loggedInUser)
   $.get("/api/getAllBits").then( function(userWithFavoriteUsers) {
     console.log("this is new:", userWithFavoriteUsers)
     for(let i = 0; i < userWithFavoriteUsers.length; i++) {
       // console.log(userWithFavoriteUsers[i].User.favoriteUser)
       let favoriteUserId = userWithFavoriteUsers[i].User.favoriteUser
-      // console.log("new one",favoriteUserId)
       if(loggedInUser.favoriteUser == userWithFavoriteUsers[i].UserId){
-        console.log("oy" + userWithFavoriteUsers[i].bit + " ")
+       followerBits.append("oy" + userWithFavoriteUsers[i].bit + " ")
       } else if(loggedInUser.id == userWithFavoriteUsers[i].UserId) {
-        console.log(userWithFavoriteUsers[i].bit)
+        followerBits.append(userWithFavoriteUsers[i].bit)
       }
         
       
@@ -153,10 +155,10 @@ function addUsertoUser(saveTheUser) {
     method: "PUT",
     url: "/api/saveUsertoUser",
     data: saveTheUser
-  }).then(console.log("is this todo: ",saveTheUser))
+  }).then(setTimeout(function(){allBitsDisplay.append(loggedInUser.email)}, 2000))
 };
 
-
+//allBitsDisplay.append(loggedInUser)
 
 //save user to account
 function saveUser(currentBit) {
@@ -183,4 +185,4 @@ function saveUser(currentBit) {
 
 getAllUsers()
 getUserAndSavedUsers()
-// getThemBits()
+// getLoggedInUser()
