@@ -22,7 +22,7 @@ module.exports = (app) => {
         if (!req.user) {
 
         res.json({});
-        } else {
+        } else {console.log("hello there", req.user)
             res.json({
             email: req.user.email,
             favoriteUser: req.user.favoriteUser,
@@ -30,6 +30,20 @@ module.exports = (app) => {
             });
         }
     }); 
+
+    app.put("/api/user_data", function(req, res) {
+        let newUpdate;
+        db.User.update({
+            favoriteUser: req.body.favoriteUser
+        },
+            {
+             where: {
+                 
+                id: req.user.id
+                }
+            })
+            .then(req.user.favoriteUser = req.body.favoriteUser).then(res.json(req.user.favoriteUser))
+        });  
 
     
     //logging out

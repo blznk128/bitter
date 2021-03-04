@@ -157,9 +157,9 @@ function getAllUsers() {
 function addUsertoUser(saveTheUser) {
   $.ajax({
     method: "PUT",
-    url: "/api/saveUsertoUser",
+    url: "/api/user_data",
     data: saveTheUser
-  }).then(setTimeout(getNewSavedUserBits,2000))
+  }).then(getUserAndSavedUsers())
 };
 
 function getNewSavedUserBits() {
@@ -180,16 +180,6 @@ function saveUser(currentBit) {
   addUsertoUser(userToBeSaved)
   
 }
-
-
-// function saveUser(){
-//   const userClickedId = $(this).attr("id")
-//   $.get("/api/getSingleUser/" + userClickedId, function(singleUser) {
-//   console.log(singleUser)
-// })
-// }
-
-
 
 getAllUsers()
 getUserAndSavedUsers()
