@@ -2,12 +2,15 @@ const userBit = $("#textarea1");
 const allBitsDisplay = $("#allBits");
 const usersHolder = $("#allUsers")
 const followerBits = $("#followerBits")
+let theList = []
 let editingBit = false;
 let selectedBitId;
 let loggedInUser;
+let loggedInUserWithFavorites;
 
 function getLoggedInUser(){
 $.get("/api/user_data").then(function(data) {
+  loggedInUserWithFavorites = data
   loggedInUser = data.id
   $("#user").text(" " + data.email);
   getFollowerBits()
@@ -82,6 +85,7 @@ $.get("/api/getAllBits").then(function(allBits) {
 function getFollowerBits() {
   $.get("/api/getAllBits").then( function(userWithFavoriteUsers) {
     console.log("this is new:", userWithFavoriteUsers)
+    theList = userWithFavoriteUsers
     for(let i = 0; i < userWithFavoriteUsers.length; i++) {
       // console.log(userWithFavoriteUsers[i].User.favoriteUser)
       let favoriteUserId = userWithFavoriteUsers[i].User.favoriteUser
@@ -155,8 +159,12 @@ function addUsertoUser(saveTheUser) {
     method: "PUT",
     url: "/api/saveUsertoUser",
     data: saveTheUser
-  }).then(setTimeout(function(){allBitsDisplay.append(loggedInUser.email)}, 2000))
+  }).then(setTimeout(getNewSavedUserBits,2000))
 };
+
+function getNewSavedUserBits() {
+  $.get("/api/getAllBits").then(function(data){setTimeout(function(){console.log(data)}, 3000)})
+}
 
 //allBitsDisplay.append(loggedInUser)
 
@@ -185,4 +193,3 @@ function saveUser(currentBit) {
 
 getAllUsers()
 getUserAndSavedUsers()
-// getLoggedInUser()

@@ -31,6 +31,7 @@ module.exports = (app) => {
         }
     }); 
 
+    
     //logging out
     app.get("/logOut", function(req,res) {
         req.logout();
