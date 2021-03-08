@@ -14,7 +14,7 @@ $.get("/api/user_data").then(function(data) {
   loggedInUserWithFavorites = data
   loggedInUser = data.id
   $("#user").text(" " + data.email);
-  getFollowerBits()
+  getUserAndSavedUsers()
 });
 }
 
@@ -89,7 +89,8 @@ function getFollowerBits() {
 function deleteBit() {
   let bitUserId = $(this).parent().attr("id")
   let bitId = $(this).parent().parent().parent().parent().attr("id")
-  if(loggedInUser == bitUserId){
+  
+  if(loggedInUser.id == bitUserId){
   $.ajax({
     method: "DELETE",
     url: "/api/deleteBit/" + bitId
@@ -175,3 +176,4 @@ function saveUser(currentBit) {
 
 getAllUsers()
 // getUserAndSavedUsers()
+// getFollowerBits()
