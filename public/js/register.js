@@ -7,7 +7,6 @@ function submitInfo() {
         email: emailOfUser.val(),
         password: userPassword.val()
     }
-    console.log(newUser)
     storeNewUser(newUser)
     window.location.href = "/"
 }

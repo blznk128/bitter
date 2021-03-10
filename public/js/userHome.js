@@ -10,7 +10,6 @@ let loggedInUserWithFavorites;
 
 function getLoggedInUser(){
 $.get("/api/user_data").then(function(data) {
-  console.log(data)
   loggedInUserWithFavorites = data
   loggedInUser = data.id
   $("#user").text(" " + data.email);
@@ -26,14 +25,12 @@ $(document).on("click", "a.testOne", saveUser);
 
 function addBit(currentBit) {
   $.post("/api/saveBit", currentBit, () => {
-
   }).then(getThemBits()).then(setTimeout(function(){ location.reload() }, 1000))
 }
 
 function submitBit() {
   event.preventDefault()
   $.get("/api/user_data").then(function(data) {
-    console.log(data.id)
     let newBit = {
       bit: userBit.val(),
       UserId: data.id
@@ -51,8 +48,6 @@ function submitBit() {
 function getThemBits() {
 $.get("/api/getAllBits").then(function(allBits) {
   for (let i = 0; i < allBits.length;i++) {
-    console.log(allBits[i].UserId)
-    //make if/else statement*
     if(loggedInUser == allBits[i].UserId){
     allBitsDisplay.append("<div id=" + allBits[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
     "<span class='card-title'>" + allBits[i].User.email + "</span>" + "<p id=" + allBits[i].UserId + ">" + allBits[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + allBits[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
@@ -68,9 +63,7 @@ $.get("/api/getAllBits").then(function(allBits) {
 
 function getFollowerBits() {
   $.get("/api/getAllBits").then( function(userWithFavoriteUsers) {
-    console.log("this is new:", userWithFavoriteUsers)
     for(let i = 0; i < userWithFavoriteUsers.length; i++) {
-      let favoriteUserId = userWithFavoriteUsers[i].User.favoriteUser
       if(loggedInUser.favoriteUser == userWithFavoriteUsers[i].UserId){
         followerBits.append("<div id=" + userWithFavoriteUsers[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
     "<span class='card-title'>" + userWithFavoriteUsers[i].User.email + "</span>" + "<p id=" + userWithFavoriteUsers[i].UserId + ">" + userWithFavoriteUsers[i].bit +  
@@ -79,17 +72,15 @@ function getFollowerBits() {
         followerBits.append("<div id=" + userWithFavoriteUsers[i].id + " " + "class='row>'" + "<div class='col s12 m6'>" + "<div class='card blue-grey darken-1'>" + "<div class='card-content white-text'>" + 
         "<span class='card-title'>" + userWithFavoriteUsers[i].User.email + "</span>" + "<p id=" + userWithFavoriteUsers[i].UserId + ">" + userWithFavoriteUsers[i].bit + "<button class = 'delete'>" + " X" + "</button>" + "<button id=" + userWithFavoriteUsers[i].id + " " + "class = 'edit'>" + "edit" + "</button>" +
         "</p>" + "</div>" + "</div>" + "</div>" + "</div>")
-      }
-        
-      
-    }
-  })
-}
+      };
+    };
+  });
+};
 
+//delete a big
 function deleteBit() {
   let bitUserId = $(this).parent().attr("id")
   let bitId = $(this).parent().parent().parent().parent().attr("id")
-  
   if(loggedInUser.id == bitUserId){
   $.ajax({
     method: "DELETE",
@@ -98,17 +89,15 @@ function deleteBit() {
 }
 }
 
+//grabbing bit id to edit
 function editBit() {
   let editBitId = parseInt($(this).attr("id"))
-
-  console.log(editBitId )
   getSelectedBit(editBitId)
 }
 
+//route for editing bit
 function getSelectedBit(id) {
   $.get("/api/bits/" + id, function(selectedBit) {
-    console.log("this is selectedbit: ",selectedBit)
-    console.log("this is selectedbit: ",loggedInUser.id)
     selectedBitId = selectedBit.id
     if(loggedInUser.id === selectedBit.UserId) {
       userBit.val(selectedBit.bit);
@@ -120,7 +109,6 @@ function getSelectedBit(id) {
 //getting user with theirs and saved users bits
 function getUserAndSavedUsers(id){
 $.get("/api/user_data").then(function(data) {
-  console.log(data)
     loggedInUser = data
     followerBits.empty()
     getFollowerBits()
@@ -155,12 +143,6 @@ function addUsertoUser(saveTheUser) {
   }).then(getUserAndSavedUsers())
 };
 
-function getNewSavedUserBits() {
-  $.get("/api/getAllBits").then(function(data){setTimeout(function(){console.log(data)}, 3000)})
-}
-
-//allBitsDisplay.append(loggedInUser)
-
 //save user to account
 function saveUser(currentBit) {
   const userClickedId = $(this).attr("id")
@@ -169,11 +151,7 @@ function saveUser(currentBit) {
     favoriteUser: userClickedId,
     UserId: currentUserId
   }
-  console.log(currentUserId)
   addUsertoUser(userToBeSaved)
-  
 }
 
 getAllUsers()
-// getUserAndSavedUsers()
-// getFollowerBits()

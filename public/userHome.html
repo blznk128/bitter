@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
-    <h1>Welcome<span id=user></span></h1>
-    <a href="/logOut">logout</a>
-
+    <a href="/logOut"><button>logout</button></a>
+    <h1 class="center-align">Welcome<span id=user></span></h1>
     <div class="row">
         <form class="col s12">
           <div class="row">
@@ -21,23 +20,15 @@
         </form>
         <a onclick = "submitBit()"class="waves-effect waves-light btn">submit</a>
     </div>
-    <div>
+    <div class="center-align">
       <h2>Users to follow.</h2>
       <span id = allUsers></span>
     </div>
     <div>
-      <h2>Bit Feed</h2>
-      <span id = "followerBits"></span>
-      <span id = "allBits"></span>
+      <h2 class="center-align">Bit Feed</h2>
+      <span class="center-align" id = "followerBits"></span>
+      <span class="center-align" id = "allBits"></span>
     </div>
-
-
-
-
-
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js" integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

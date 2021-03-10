@@ -31,6 +31,7 @@ module.exports = (app) => {
         }
     }); 
 
+    //changing favorite user to logged in user
     app.put("/api/user_data", function(req, res) {
         let newUpdate;
         db.User.update({
@@ -126,7 +127,6 @@ module.exports = (app) => {
         },
             {
              where: {
-                 //maybe .then cause req.body.id isnt pulling up
                 id: req.user.id
                 }
             })
