@@ -153,5 +153,21 @@ function saveUser(currentBit) {
   }
   addUsertoUser(userToBeSaved)
 }
+$.ajax({
+  url: "https://us.battle.net/oauth/authorize",
+  method: "GET",
+  data: {
+      region: 'us',
+      client_id: 'aba192923781479bb3a7cc0aea5a4ec8',
+      response_type: 'code',
+      redirect_uri: 'https://localhost',
+      scope: 'wow.profile',
+      dataType: "json"
+      
+      },
+  success: function(data){
+      console.log(data)
+  }
+})
 
 getAllUsers()
